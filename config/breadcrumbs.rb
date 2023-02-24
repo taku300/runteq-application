@@ -1,3 +1,77 @@
+# 参考　https://zenn.dev/yukihaga/articles/789d0c6c736335
+
+crumb :root do
+  link "Home", admin_dashboard_path
+end
+
+crumb :admin_articles do
+  link "記事", admin_authors_path
+end
+
+crumb :new_admin_article do
+  link "記事新規作成", new_admin_article_path
+  parent :admin_articles
+end
+
+crumb :edit_admin_article do
+  link "記事編集", edit_admin_article_path
+  parent :admin_articles
+end
+
+crumb :admin_categories do
+  link "カテゴリー", admin_categories_path
+end
+
+crumb :edit_admin_category do
+  link "カテゴリー編集", edit_admin_category_path
+  parent :admin_categories
+end
+
+crumb :admin_tags do
+  link "タグ", admin_tags_path
+end
+
+crumb :edit_admin_tag do
+  link "タグ編集", edit_admin_tag_path
+  parent :admin_tags
+end
+
+crumb :admin_authors do
+  link "著者", admin_authors_path
+end
+
+crumb :edit_admin_author do
+  link "著者編集", edit_admin_author_path
+  parent :admin_authors
+end
+
+crumb :admin_users do
+  link "ユーザー", admin_users_path
+end
+
+crumb :new_admin_user do
+  link "ユーザー新規作成", new_admin_user_path
+  parent :admin_users
+end
+
+crumb :admin_user do
+  link "ユーザープロフィール", admin_user_path
+  parent :admin_users
+end
+
+crumb :admin_invitations do
+  link "招待", admin_invitations_path
+end
+
+crumb :new_admin_invitation do
+  link "招待新規作成", new_admin_invitation_path
+  parent :admin_invitations
+end
+
+crumb :edit_admin_site do
+  link "設定", edit_admin_site_path
+end
+
 # crumb :projects do
 #   link "Projects", projects_path
 # end
@@ -22,72 +96,3 @@
 # files there. All *.rb files (e.g. `frontend.rb` or `products.rb`) in that
 # folder are loaded and reloaded automatically when you change them, just like
 # this file (`config/breadcrumbs.rb`).
-
-crumb :admin_dashboard do
-  link '<i class="fa fa-dashboard"></i> Home'.html_safe, admin_dashboard_path
-end
-
-crumb :edit_admin_site do
-  link '設定', edit_admin_site_path
-  parent :admin_dashboard
-end
-
-crumb :admin_users do
-  link 'ユーザー', admin_users_path
-  parent :admin_dashboard
-end
-
-crumb :admin_user do |user|
-  link 'プロフィール', admin_user_path(user)
-  parent :admin_users
-end
-
-crumb :new_admin_user do
-  link 'ユーザーの作成', new_admin_user_path
-  parent :admin_users
-end
-
-crumb :admin_invitations do
-  link '招待', admin_invitations_path
-  parent :admin_dashboard
-end
-
-crumb :new_admin_invitation do
-  link '招待状の作成', new_admin_invitation_path
-  parent :admin_invitations
-end
-
-crumb :admin_categories do
-  link 'カテゴリー', admin_categories_path
-  parent :admin_dashboard
-end
-
-crumb :edit_admin_category do |category|
-  link 'カテゴリー編集', edit_admin_category_path(category)
-  parent :admin_categories
-end
-
-crumb :admin_authors do
-  link '著者', admin_authors_path
-  parent :admin_dashboard
-end
-
-crumb :edit_admin_author do |author|
-  link '著者編集', edit_admin_author_path(author)
-  parent :admin_authors
-end
-
-crumb :admin_articles do
-  link '記事', admin_articles_path
-  parent :admin_dashboard
-end
-
-crumb :new_admin_article do
-  link '記事作成', new_admin_article_path
-  parent :admin_articles
-end
-
-crumb :edit_admin_article do |article|
-  link '記事編集', edit_admin_article_path(article.uuid)
-  parent :admin_articles
-end

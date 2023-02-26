@@ -63,6 +63,7 @@ class Article < ApplicationRecord
   scope :new_arrivals, -> { viewable.order(published_at: :desc) }
   scope :by_category, ->(category_id) { where(category_id: category_id) }
   scope :title_contain, ->(word) { where('title LIKE ?', "%#{word}%") }
+  scope :past_published, -> { where('published_at <= ?', Time.current) }
 
   def build_body(controller)
     result = ''
@@ -103,5 +104,28 @@ class Article < ApplicationRecord
       article.published_at = Time.current
       article.state = :published
     end
+  end
+
+
+  def publishable?
+    Time.current >= published_at
+  end
+
+  def message_on_published
+    if published?
+      '記事を公開しました'
+    elsif publish_wait?
+      '記事を公開待ちにしました'
+    end
+  end
+
+  def adjust_state
+    return if draft?
+
+    self.state = if publishable?
+                   :published
+                 else
+                   :publish_wait
+                 end
   end
 end

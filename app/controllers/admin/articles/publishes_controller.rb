@@ -4,8 +4,7 @@ class Admin::Articles::PublishesController < ApplicationController
   before_action :set_article
 
   def update
-    @article.published_at = Time.current unless @article.published_at?
-    @article.state = :published
+    @article.check_status
 
     if @article.valid?
       Article.transaction do
@@ -13,9 +12,10 @@ class Admin::Articles::PublishesController < ApplicationController
         @article.save!
       end
 
-      flash[:notice] = '記事を公開しました'
+      flash[:notice] = '記事を公開しました' if @article.published?
+      flash[:notice] = '公開待ちにしました' if @article.publish_wait?
 
-      redirect_to edit_admin_article_path(@article.uuid)
+      return redirect_to edit_admin_article_path(@article.uuid)
     else
       flash.now[:alert] = 'エラーがあります。確認してください。'
 

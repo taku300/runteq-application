@@ -15,8 +15,8 @@ crumb :new_admin_article do
 end
 
 # :todo objectを渡さないといけない
-crumb :edit_admin_article do
-  link "記事編集", edit_admin_article_path
+crumb :edit_admin_article do |article|
+  link "記事編集", edit_admin_article_path(article)
   parent :admin_articles
 end
 

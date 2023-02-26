@@ -39,7 +39,7 @@ class Article < ApplicationRecord
 
   has_one_attached :eye_catch
 
-  enum state: { draft: 0, published: 1 }
+  enum state: { draft: 0, published: 1, publish_wait: 2 }
 
   validates :slug, slug_format: true, uniqueness: true, length: { maximum: 255 }, allow_blank: true
   validates :title, presence: true, uniqueness: true, length: { maximum: 255 }
@@ -88,5 +88,20 @@ class Article < ApplicationRecord
 
   def prev_article
     @prev_article ||= Article.viewable.order(published_at: :desc).find_by('published_at < ?', published_at)
+  end
+
+  def publish_future?
+    article = self
+    Time.now < article.published_at.to_time
+  end
+
+  def check_status
+    article = self
+    if article.published_at? && article.publish_future?
+      article.state = :publish_wait
+    else
+      article.published_at = Time.current
+      article.state = :published
+    end
   end
 end

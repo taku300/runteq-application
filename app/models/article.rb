@@ -92,7 +92,7 @@ class Article < ApplicationRecord
 
   def publish_future?
     article = self
-    Time.now < article.published_at.to_time
+    Time.zone.now < article.published_at.in_time_zone
   end
 
   def check_status

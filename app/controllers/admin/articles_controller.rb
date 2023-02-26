@@ -36,6 +36,8 @@ class Admin::ArticlesController < ApplicationController
 
     @article.assign_attributes(article_params)
 
+    @article.state = :published unless @article.draft?
+
     if @article.published_at? && !@article.draft? && @article.publish_future?
       @article.state = :publish_wait
     end

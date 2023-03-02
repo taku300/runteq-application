@@ -65,7 +65,7 @@ class Article < ApplicationRecord
   scope :by_author, ->(author_id) { where(author_id: author_id) }
   scope :by_tag, ->(tag_id) { joins(:article_tags).where(article_tags: { tag_id: tag_id }) }
   scope :title_contain, ->(word) { where('title LIKE ?', "%#{word}%") }
-  scope :body_contain, ->(body) { joins(:sentences).merge(where('sentences.body LIKE ?', "%#{body}%")) } #mergeを使うともっと複雑なものや、scopeを呼び足したりするときに便利なので使った方がいい。
+  scope :body_contain, ->(body) { joins(:sentences).merge(where('sentences.body LIKE ?', "%#{body}%")) } # mergeを使うともっと複雑なものや、scopeを呼び足したりするときに便利なので使った方がいい。
   scope :past_published, -> { where('published_at <= ?', Time.current) }
 
   def build_body(controller)

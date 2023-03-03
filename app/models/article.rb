@@ -46,6 +46,7 @@ class Article < ApplicationRecord
   validates :description, length: { maximum: 1000 }, allow_blank: true
   validates :state, presence: true
   validates :eye_catch, attachment: { purge: true, content_type: %r{\Aimage/(png|jpeg)\Z}, maximum: 10_485_760 }
+  validates :eyecatch_width, allow_nil: true, numericality: { greater_than_or_equal_to: 100, less_than_or_equal_to: 700 }
 
   with_options if: :published? do
     validates :slug, slug_format: true, presence: true, length: { maximum: 255 }
@@ -107,6 +108,18 @@ class Article < ApplicationRecord
       article.published_at = Time.current
       article.state = :published
     end
+  end
+
+  def check_eye_catch_aligned
+    case eye_catch_aligned
+    when 1
+      aligned = 'text-left'
+    when 2
+      aligned = 'text-center'
+    when 3
+      aligned = 'text-right'
+    end
+    aligned
   end
 
   def publishable?

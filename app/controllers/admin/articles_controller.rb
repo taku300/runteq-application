@@ -16,10 +16,8 @@ class Admin::ArticlesController < ApplicationController
 
   def create
     authorize(Article)
-
     @article = Article.new(article_params)
     @article.state = :draft
-
     if @article.save
       redirect_to edit_admin_article_path(@article.uuid)
     else
@@ -56,7 +54,7 @@ class Admin::ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(
-      :title, :description, :slug, :state, :published_at, :eye_catch, :category_id, :author_id, tag_ids: []
+      :title, :description, :slug, :state, :published_at, :eye_catch, :eyecatch_width, :eye_catch_aligned, :category_id, :author_id, tag_ids: []
     )
   end
 

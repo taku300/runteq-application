@@ -12,7 +12,7 @@ module ArticleDecorator
               when :ogp
                 { resize: '120x630' }
               else
-                false
+                { resize: version.to_s + 'x630' }
               end
 
     command ? eye_catch.variant(command).processed : eye_catch
